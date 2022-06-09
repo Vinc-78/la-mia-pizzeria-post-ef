@@ -24,10 +24,10 @@
                     <p>@Model.Prezzo &euro;</p>
                 </div>
                
-                <a class="btn btn-primary my-3" href="@Url.Action("Modifica", "Pizza", new{Model.Id})">Modifica Pizza con primo metodo</a>
+               
                 <a class="btn btn-danger my-3" href="@Url.Action("Elimina", "Pizza", new{Model.Id})">Elimina Pizza</a>
 
-                 <a class="btn btn-primary my-3" href="@Url.Action("ModificaSecondaVersione", "Pizza", new{Model.Id})">Modifica Pizza con Asp-Controller</a>
+                 <a class="btn btn-primary my-3" href="@Url.Action("ModificaSecondaVersione", "Pizza", new{Model.Id, dummy = new Random().Next()})">Modifica Pizza con Asp-Controller</a>
                  
 
             </div>

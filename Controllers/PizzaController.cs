@@ -17,6 +17,8 @@ namespace la_mia_pizzeria_static.Controllers
 
         public IActionResult Index()
         {
+            PizzaContext db = new PizzaContext();
+
             //inizializzato il db con 3 pizze e caricate nel db
             //parte da eseguire una prima volta
             /*
@@ -62,7 +64,7 @@ namespace la_mia_pizzeria_static.Controllers
 
 
         
-        public IActionResult Show(int id)
+        public IActionResult Show(int id, int dummy)
         {
             using (PizzaContext db = new PizzaContext())
             {
@@ -77,22 +79,10 @@ namespace la_mia_pizzeria_static.Controllers
         }
         
         
-        public IActionResult Modifica(int id)
-        {
-            using (PizzaContext db = new PizzaContext())
-            {
-                Pizza? PizzaDaModificare = db.pizzas.Where(p => p.Id == id).First();
-
-                if (PizzaDaModificare != null)
-                {
-                    return View("Modifica", PizzaDaModificare);
-                }
-                else { return NotFound(" La pizza con l'id " + id + " non è stato trovato "); }
-            }
-        }
+       
         
         
-        public IActionResult ModificaSecondaVersione(int id)
+        public IActionResult ModificaSecondaVersione(int id, int dummy)
         {
             using (PizzaContext db = new PizzaContext())
             {
@@ -122,7 +112,7 @@ namespace la_mia_pizzeria_static.Controllers
 
             FileInfo fileInfo = new FileInfo(Modificata.File.FileName);
 
-            string fileName = Modificata.Nome.Trim().ToLower() + fileInfo.Extension.Trim().ToLower();
+            string fileName = Convert.ToString( Modificata.Id) + fileInfo.Extension;
 
 
             string fileNameWithPath = Path.Combine(path, fileName);
@@ -150,13 +140,15 @@ namespace la_mia_pizzeria_static.Controllers
                     pizzaDaModificare.Prezzo = Modificata.Prezzo.ToString();
 
                     db.SaveChanges();
+                    return RedirectToAction("Index", "Pizza");
 
-                    return RedirectToAction("Index");
                 }
+
                 else
                 {
                     return NotFound();
                 }
+                
             }
         }
         
